@@ -125,4 +125,15 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionTestDb()
+    {
+        try {
+            $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM authors')->queryScalar();
+            return "Количество авторов в базе: " . $count;
+        } catch (\Exception $e) {
+            return "Ошибка подключения к базе данных: " . $e->getMessage();
+        }
+    }
+
 }

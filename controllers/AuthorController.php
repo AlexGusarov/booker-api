@@ -14,7 +14,7 @@ class AuthorController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        // Например, добавить аутентификацию здесь
+
         return $behaviors;
     }
 
@@ -22,7 +22,6 @@ class AuthorController extends ActiveController
     {
         $actions = parent::actions();
 
-        // Настройка 'prepareDataProvider' для 'index' действия, если нужна кастомная фильтрация
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
 
         return $actions;
@@ -32,7 +31,6 @@ class AuthorController extends ActiveController
     {
         $query = Author::find();
 
-        // Пример фильтрации по имени автора
         $name = Yii::$app->request->get('name');
         if ($name) {
             $query->andFilterWhere(['like', 'name', $name]);

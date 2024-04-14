@@ -2,9 +2,6 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
-
 $testDatabaseUrl = getenv('TEST_DATABASE_URL');
 if ($testDatabaseUrl === false) {
     throw new Exception('TEST_DATABASE_URL не определена в переменных окружения.');

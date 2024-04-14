@@ -6,7 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'cors'],
+    'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
@@ -25,6 +25,17 @@ $config = [
             'class' => 'yii\web\Response',
             'format' => \yii\web\Response::FORMAT_JSON,
             'charset' => 'UTF-8',
+            'as cors' => [
+                'class' => \app\components\CorsCustom::class,
+                'cors' => [
+                    'Origin' => ['*'],
+                    'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
+                    'Access-Control-Request-Headers' => ['*'],
+                    'Access-Control-Allow-Headers' => ['*'],
+                    'Access-Control-Allow-Credentials' => true,
+                    'Access-Control-Max-Age' => 3600,
+                ],
+            ],
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
                 if ($response->data !== null && !$response->isSuccessful) {
@@ -78,17 +89,7 @@ $config = [
         ],
     ],
     'params' => $params,
-    'as cors' => [
-        'class' => \app\components\CorsCustom::class,
-        'cors' => [
-            'Origin' => ['*'],
-            'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
-            'Access-Control-Request-Headers' => ['*'],
-            'Access-Control-Allow-Headers' => ['*'],
-            'Access-Control-Allow-Credentials' => true,
-            'Access-Control-Max-Age' => 3600,
-        ],
-    ],
+
 
 ];
 

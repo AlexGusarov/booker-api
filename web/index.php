@@ -9,4 +9,12 @@ require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 
 $config = require __DIR__ . '/../config/web.php';
 
-(new yii\web\Application($config))->run();
+$application = new yii\web\Application($config);
+
+$application->on(yii\base\Application::EVENT_BEFORE_REQUEST, function ($event) {
+    if (preg_match('#^/api/#', Yii::$app->request->url)) {
+        Yii::$app->request->enableCsrfValidation = false;
+    }
+});
+
+$application->run();

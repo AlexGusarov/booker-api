@@ -15,7 +15,7 @@ use Yii;
  * @property string|null $language
  * @property string|null $genre
  *
- * @property Authors $author
+ * @property Author $author
  */
 class Book extends \yii\db\ActiveRecord
 {
@@ -33,15 +33,28 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'author_id'], 'required'],
+            [['title'], 'required'],
             [['author_id', 'page_count'], 'default', 'value' => null],
             [['author_id', 'page_count'], 'integer'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 255],
             [['language', 'genre'], 'string', 'max' => 100],
-            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Authors::class, 'targetAttribute' => ['author_id' => 'id']],
         ];
     }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        unset($fields['author_id']);
+
+        $fields['author'] = function ($model) {
+            return $model->author->name;
+        };
+
+        return $fields;
+    }
+
 
     /**
      * {@inheritdoc}
@@ -66,6 +79,6 @@ class Book extends \yii\db\ActiveRecord
      */
     public function getAuthor()
     {
-        return $this->hasOne(Authors::class, ['id' => 'author_id']);
+        return $this->hasOne(Author::class, ['id' => 'author_id']);
     }
 }

@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $name
  *
- * @property Books[] $books
+ * @property Book[] $books
  */
 class Author extends \yii\db\ActiveRecord
 {
@@ -51,6 +51,6 @@ class Author extends \yii\db\ActiveRecord
      */
     public function getBooks()
     {
-        return $this->hasMany(Books::class, ['author_id' => 'id']);
+        return $this->hasMany(Book::class, ['author_id' => 'id']);
     }
 }

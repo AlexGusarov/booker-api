@@ -6,7 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'cors'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
@@ -78,6 +78,18 @@ $config = [
         ],
     ],
     'params' => $params,
+    'as cors' => [
+        'class' => \app\components\CorsCustom::class,
+        'cors' => [
+            'Origin' => ['*'],
+            'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
+            'Access-Control-Request-Headers' => ['*'],
+            'Access-Control-Allow-Headers' => ['*'],
+            'Access-Control-Allow-Credentials' => true,
+            'Access-Control-Max-Age' => 3600,
+        ],
+    ],
+
 ];
 
 return $config;

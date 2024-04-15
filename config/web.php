@@ -75,7 +75,7 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['book', 'author'],
+                    'controller' => ['book', 'author', 'language'],
                     'prefix' => 'api',
                     'extraPatterns' => [
                         'GET search' => 'search',

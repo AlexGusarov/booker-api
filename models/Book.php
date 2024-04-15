@@ -33,12 +33,13 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
+            [['title', 'language'], 'required'],
             [['author_id', 'page_count'], 'default', 'value' => null],
             [['author_id', 'page_count'], 'integer'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 255],
-            [['language', 'genre'], 'string', 'max' => 100],
+            [['language'], 'exist', 'skipOnError' => true, 'targetClass' => Language::class, 'targetAttribute' => ['language' => 'id']],
+            [['genre'], 'string', 'max' => 100],
         ];
     }
 
@@ -80,5 +81,10 @@ class Book extends \yii\db\ActiveRecord
     public function getAuthor()
     {
         return $this->hasOne(Author::class, ['id' => 'author_id']);
+    }
+
+    public function getLanguageModel()
+    {
+        return $this->hasOne(Language::class, ['id' => 'language']);
     }
 }

@@ -58,7 +58,7 @@ class BookController extends ActiveController
 
     public function prepareDataProvider()
     {
-        $query = Book::find();
+        $query = Book::find()->joinWith('languageModel');
 
         $title = Yii::$app->request->get('title');
         $description = Yii::$app->request->get('description');
@@ -76,7 +76,7 @@ class BookController extends ActiveController
             $query->andFilterWhere(['in', 'author_id', $authors]);
         }
         if ($languages) {
-            $query->andFilterWhere(['in', 'language', $languages]);
+            $query->andFilterWhere(['in', 'languageModel.id', $languages]);
         }
         if ($genres) {
             $query->andFilterWhere(['in', 'genre', $genres]);

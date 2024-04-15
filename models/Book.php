@@ -37,7 +37,7 @@ class Book extends \yii\db\ActiveRecord
             [['author_id', 'page_count'], 'integer'],
             [['description'], 'string'],
             [['title', 'language', 'genre'], 'string', 'max' => 255],
-            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::class, 'targetAttribute' => ['id' => 'author_id']],
+            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::class, 'targetAttribute' => ['author_id' => 'id']],
         ];
     }
 

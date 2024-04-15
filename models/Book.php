@@ -12,10 +12,11 @@ use Yii;
  * @property int $author_id
  * @property string|null $description
  * @property int|null $page_count
- * @property string|null $language
+ * @property int $language_id
  * @property string|null $genre
  *
  * @property Author $author
+ * @property Language $languageModel
  */
 class Book extends \yii\db\ActiveRecord
 {
@@ -26,6 +27,11 @@ class Book extends \yii\db\ActiveRecord
     {
         return 'books';
     }
+
+    /**
+     * @var int $language_id Language ID
+     */
+    public $language_id;
 
     /**
      * {@inheritdoc}
@@ -46,10 +52,13 @@ class Book extends \yii\db\ActiveRecord
     {
         $fields = parent::fields();
 
-        unset($fields['author_id']);
-
+        unset($fields['author_id'], $fields['language_id']);
         $fields['author'] = function ($model) {
             return $model->author->name;
+        };
+
+        $fields['language'] = function ($model) {
+            return $model->languageModel ? $model->languageModel->name : null;
         };
 
         return $fields;
@@ -84,6 +93,6 @@ class Book extends \yii\db\ActiveRecord
 
     public function getLanguageModel()
     {
-        return $this->hasOne(Language::class, ['id' => 'language']);
+        return $this->hasOne(Language::class, ['id' => 'language_id']);
     }
 }

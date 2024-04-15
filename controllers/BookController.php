@@ -32,35 +32,22 @@ class BookController extends ActiveController
     public function actionCreate()
     {
         $book = new Book();
-        $book->load(Yii::$app->request->post(), '');
-
-        $authorId = Yii::$app->request->post('author_id');
-        $languageId = Yii::$app->request->post('language_id');
-
-        if (!$authorId) {
-            return ['success' => false, 'message' => 'Author ID is required'];
-        }
-
-        $author = Author::findOne($authorId);
-        if (!$author) {
-            return ['success' => false, 'message' => 'Author not found'];
-        }
-
-        $language = Language::findOne($languageId);
-        if (!$language) {
-            return ['success' => false, 'message' => 'Language not found'];
-        }
-
-        $book->author_id = $author->id;
-        $book->language_id = $language->id;
-
-        if (!$book->save()) {
-            Yii::error("Ошибка при сохранении книги: " . json_encode($book->getErrors()), __METHOD__);
+        if ($book->load(Yii::$app->request->post(), '') && $book->validate()) {
+            $language = Language::findOne(Yii::$app->request->post('language_id'));
+            if (!$language) {
+                return ['success' => false, 'message' => 'Language not found'];
+            }
+            $book->language_id = $language->id;
+            if ($book->save()) {
+                return ['success' => true, 'message' => 'Книга успешно создана', 'data' => $book];
+            } else {
+                return ['success' => false, 'errors' => $book->getErrors()];
+            }
+        } else {
             return ['success' => false, 'errors' => $book->getErrors()];
         }
-
-        return ['success' => true, 'message' => 'Книга успешно создана'];
     }
+
 
     public function prepareDataProvider()
     {

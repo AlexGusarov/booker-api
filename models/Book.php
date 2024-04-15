@@ -67,7 +67,7 @@ class Book extends \yii\db\ActiveRecord
             'author_id' => 'Author ID',
             'description' => 'Description',
             'page_count' => 'Page Count',
-            'language' => 'Language',
+            'language_id' => 'Language ID',
             'genre' => 'Genre',
         ];
     }

@@ -35,7 +35,7 @@ class BookController extends ActiveController
         $book->load(Yii::$app->request->post(), '');
 
         $authorId = Yii::$app->request->post('author_id');
-        $languageId = Yii::$app->request->post('language_id');  // Получение language_id из запроса
+        $languageId = Yii::$app->request->post('language_id');
 
         if (!$authorId) {
             return ['success' => false, 'message' => 'Author ID is required'];
@@ -46,7 +46,7 @@ class BookController extends ActiveController
             return ['success' => false, 'message' => 'Author not found'];
         }
 
-        $language = Language::findOne($languageId);  // Проверка существования языка
+        $language = Language::findOne($languageId);
         if (!$language) {
             return ['success' => false, 'message' => 'Language not found'];
         }

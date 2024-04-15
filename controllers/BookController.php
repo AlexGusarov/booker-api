@@ -33,18 +33,14 @@ class BookController extends ActiveController
         $book = new Book();
         $book->load(Yii::$app->request->post(), '');
 
-        $authorName = Yii::$app->request->post('author');
-        if (!$authorName) {
-            return ['success' => false, 'message' => 'Author is required'];
+        $authorId = Yii::$app->request->post('author_id');
+        if (!$authorId) {
+            return ['success' => false, 'message' => 'Author ID is required'];
         }
 
-        $author = Author::find()->where(['name' => $authorName])->one();
+        $author = Author::findOne($authorId);
         if (!$author) {
-            $author = new Author();
-            $author->name = $authorName;
-            if (!$author->save()) {
-                return ['success' => false, 'errors' => $author->getErrors()];
-            }
+            return ['success' => false, 'message' => 'Author not found'];
         }
 
         $book->author_id = $author->id;

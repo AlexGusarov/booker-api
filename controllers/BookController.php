@@ -34,6 +34,8 @@ class BookController extends ActiveController
         $book->load(Yii::$app->request->post(), '');
 
         $authorId = Yii::$app->request->post('author_id');
+        $languageId = Yii::$app->request->post('language_id');  // Получение language_id из запроса
+
         if (!$authorId) {
             return ['success' => false, 'message' => 'Author ID is required'];
         }
@@ -43,13 +45,20 @@ class BookController extends ActiveController
             return ['success' => false, 'message' => 'Author not found'];
         }
 
-        $book->author_id = $author->id;
+        $language = Language::findOne($languageId);  // Проверка существования языка
+        if (!$language) {
+            return ['success' => false, 'message' => 'Language not found'];
+        }
 
-        if ($book->save()) {
-            return ['success' => true, 'book' => $book];
-        } else {
+        $book->author_id = $author->id;
+        $book->language_id = $language->id;
+
+        if (!$book->save()) {
+            Yii::error("Ошибка при сохранении книги: " . json_encode($book->getErrors()), __METHOD__);
             return ['success' => false, 'errors' => $book->getErrors()];
         }
+
+        return ['success' => true, 'message' => 'Книга успешно создана'];
     }
 
     public function prepareDataProvider()
@@ -71,9 +80,11 @@ class BookController extends ActiveController
         if ($authors) {
             $query->andFilterWhere(['in', 'author_id', $authors]);
         }
+
         if ($languages) {
-            $query->andFilterWhere(['in', 'languageModel.id', $languages]);
+            $query->andFilterWhere(['in', 'language_id', $languages]);
         }
+
         if ($genres) {
             $query->andFilterWhere(['in', 'genre', $genres]);
         }

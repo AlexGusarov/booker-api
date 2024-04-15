@@ -33,11 +33,12 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'author_id', 'language', 'genre'], 'required'],
-            [['author_id', 'page_count'], 'integer'],
+            [['title', 'author_id', 'language_id', 'genre'], 'required'],
+            [['author_id', 'page_count', 'language_id'], 'integer'],
             [['description'], 'string'],
-            [['title', 'language', 'genre'], 'string', 'max' => 255],
+            [['title', 'genre'], 'string', 'max' => 255],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::class, 'targetAttribute' => ['author_id' => 'id']],
+            [['language_id'], 'exist', 'skipOnError' => true, 'targetClass' => Language::class, 'targetAttribute' => ['language_id' => 'id']],
         ];
     }
 

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Book;
 use app\models\Author;
+use app\models\Language;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
 

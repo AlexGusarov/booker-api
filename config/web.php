@@ -62,9 +62,26 @@ $config = [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
+                // Цель для логирования в файл
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                ],
+                // Цель для логирования отладочной информации в отдельный файл
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['debug*'],
+                    'logFile' => '@runtime/logs/debug.log',
+                ],
+                // Цель для вывода логов в stdout
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning', 'info'],
+                    'logVars' => [], // Не включать $_GET, $_POST и т.д.
+                    'exportInterval' => 1, // Выводить логи сразу
+                    'categories' => ['console*'],
+                    'logFile' => 'php://stdout', // Вывод в stdout
                 ],
             ],
         ],

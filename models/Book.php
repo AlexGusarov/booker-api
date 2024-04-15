@@ -31,7 +31,7 @@ class Book extends \yii\db\ActiveRecord
     /**
      * @var int $language_id Language ID
      */
-    public $language_id;
+
 
     /**
      * {@inheritdoc}
@@ -52,14 +52,15 @@ class Book extends \yii\db\ActiveRecord
     {
         $fields = parent::fields();
 
+        $fields['language'] = function ($model) {
+            return $model->languageModel ? $model->languageModel->name : null;
+        };
+
         unset($fields['author_id'], $fields['language_id']);
         $fields['author'] = function ($model) {
             return $model->author->name;
         };
 
-        $fields['language'] = function ($model) {
-            return $model->languageModel ? $model->languageModel->name : null;
-        };
 
         return $fields;
     }

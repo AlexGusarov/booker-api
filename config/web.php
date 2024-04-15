@@ -25,19 +25,14 @@ $config = [
             'class' => 'yii\web\Response',
             'format' => \yii\web\Response::FORMAT_JSON,
             'charset' => 'UTF-8',
-            'as cors' => [
-                'class' => \app\components\CorsCustom::class,
-                'cors' => [
-                    'Origin' => ['*'],
-                    'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
-                    'Access-Control-Request-Headers' => ['*'],
-                    'Access-Control-Allow-Headers' => ['*'],
-                    'Access-Control-Allow-Credentials' => true,
-                    'Access-Control-Max-Age' => 3600,
-                ],
-            ],
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
+
+                $response->headers->add('Access-Control-Allow-Origin', '*');
+                $response->headers->add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+                $response->headers->add('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+                $response->headers->add('Access-Control-Allow-Credentials', 'true');
+
                 if ($response->data !== null && !$response->isSuccessful) {
                     $response->data = [
                         'success' => $response->isSuccessful,
@@ -47,6 +42,7 @@ $config = [
                     ];
                 }
             },
+
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

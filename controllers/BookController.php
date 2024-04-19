@@ -47,6 +47,26 @@ class BookController extends ActiveController
             return ['success' => false, 'errors' => $book->getErrors()];
         }
     }
+    public function actionGenres()
+    {
+        try {
+            $genres = Book::find()
+                ->select(['genre'])
+                ->distinct(true)
+                ->orderBy('genre')
+                ->asArray()
+                ->all();
+
+            return $this->asJson($genres);
+        } catch (\Throwable $e) {
+            Yii::error("Ошибка при получении жанров: " . $e->getMessage(), __METHOD__);
+            return $this->asJson([
+                'success' => false,
+                'message' => 'Произошла ошибка при загрузке жанров'
+            ]);
+        }
+    }
+
 
 
     public function prepareDataProvider()

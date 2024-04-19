@@ -96,6 +96,7 @@ $config = [
                     'prefix' => 'api',
                     'extraPatterns' => [
                         'GET search' => 'search',
+                        'GET genres' => 'genres'
                     ]
                 ],
             ],

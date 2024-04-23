@@ -76,7 +76,7 @@ class BookController extends ActiveController
         $title = Yii::$app->request->get('title');
         $description = Yii::$app->request->get('description');
         if ($title) {
-            $query->andFilterWhere(['like', 'title', $title]);
+            $query->andFilterWhere(['like', 'lower(title)', mb_strtolower($title)]);
         }
         if ($description) {
             $query->andFilterWhere(['like', 'description', $description]);
@@ -105,6 +105,8 @@ class BookController extends ActiveController
         if ($page_count_max !== null) {
             $query->andWhere(['<=', 'page_count', $page_count_max]);
         }
+
+        Yii::info("SQL Query: " . $query->createCommand()->getRawSql(), __METHOD__);
 
         return new ActiveDataProvider([
             'query' => $query,

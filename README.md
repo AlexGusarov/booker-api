@@ -1,54 +1,54 @@
 # API Endpoints Docs
 
-## Эндпоинты для книг
+## Endpoints for books
 
-### 1. Получение списка книг
+###1. Getting a list of books
 
-- **Метод:** GET
+- **Method:** GET
 - **URL:** `api/books`
-- **Параметры:**
-  - `title` (string) — фильтр по названию книги (подстрока).
-  - `description` (string) — фильтр по описанию книги (подстрока).
-  - `authors` (array of integers) — фильтр по ID авторов (мультиселект).
-  - `languages` (array of strings) — фильтр по языкам книг (мультиселект).
-  - `genres` (array of strings) — фильтр по жанрам книг (мультиселект).
-  - `page_count_min` (integer) — минимальное количество страниц.
-  - `page_count_max` (integer) — максимальное количество страниц.
-- **Описание:** Возвращает список книг с возможностью фильтрации по различным параметрам.
+- **Parameters:**
+- `title` (string) — filter by book title (substring).
+  - `description` (string) — filter by book description (substring).
+  - `authors` (array of integers) — filter by author ID (multiselect).
+  - `languages' (array of strings) — filter by book languages (multiselect).
+  - `genres' (array of strings) — filter by genres of books (multiselect).
+  - `page_count_min` (integer) — the minimum number of pages.
+  - `page_count_max` (integer) — the maximum number of pages.
+- **Description:** Returns a list of books with the ability to filter by various parameters.
 
-### 2. Создание новой книги
+### 2. Creating a new book
 
-- **Метод:** POST
+- **Method:** POST
 - **URL:** `api/books`
-- **Параметры в теле запроса:**
-  - `title` (string) — название книги.
-  - `author` (string) — имя автора (новый автор будет создан, если не найден).
-  - `description` (string) — описание книги.
-  - `page_count` (integer) — количество страниц.
-  - `language` (string) — язык книги.
-  - `genre` (string) — жанр книги.
-- **Описание:** Создаёт новую книгу и возвращает информацию о книге или ошибку.
+- **Parameters in the request body:**
+- `title` (string) — the title of the book.
+  - `author` (string) — the name of the author (a new author will be created if not found).
+  - `description' (string) — description of the book.
+  - `page_count` (integer) — the number of pages.
+  - `language' (string) — the language of the book.
+  - `genre' (string) — the genre of the book.
+- **Description:** Creates a new book and returns information about the book or an error.
 
-## Эндпоинты для авторов
+## Endpoints for authors
 
-### 1. Получение списка авторов
+###1. Getting a list of authors
 
-- **Метод:** GET
+- **Method:** GET
 - **URL:** `api/authors`
-- **Параметры:**
-  - `name` (string) — фильтр по имени автора (подстрока).
-- **Описание:** Возвращает список авторов с возможностью фильтрации по имени.
+- **Parameters:**
+- `name' (string) — filter by author's name (substring).
+- **Description:** Returns a list of authors with the ability to filter by name.
 
-### 2. Создание нового автора
+### 2. Creating a new author
 
-- **Метод:** POST
+- **Method:** POST
 - **URL:** `api/authors`
-- **Параметры в теле запроса:**
-  - `name` (string) — имя автора.
-- **Описание:** Создаёт нового автора и возвращает информацию о авторе или ошибку.
+- **Parameters in the request body:**
+- `name` (string) — the author's name.
+- **Description:** Creates a new author and returns information about the author or an error.
 
-## Примеры параметров для мультиселекта
+## Examples of parameters for a multiselect
 
-Для мультиселекта в GET-запросах параметры могут быть переданы в виде массива или повторения параметра с разными значениями, например:
+For a multiselect in GET requests, parameters can be passed as an array or a repetition of a parameter with different values, for example:
 - `/books?authors[]=1&authors[]=2&authors[]=3`
 - `/books?languages=en&languages=de`

@@ -2,7 +2,7 @@
 
 ## Endpoints for books
 
-###1. Getting a list of books
+### 1. Getting a list of books
 
 - **Method:** GET
 - **URL:** `api/books`
@@ -31,7 +31,7 @@
 
 ## Endpoints for authors
 
-###1. Getting a list of authors
+### 1. Getting a list of authors
 
 - **Method:** GET
 - **URL:** `api/authors`
